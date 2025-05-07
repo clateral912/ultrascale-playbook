@@ -99,9 +99,14 @@ module.exports = {
     ],
     devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'eval-source-map',
     devServer: {
-        static: "./dist", // Serve files from the 'dist' directory
-        open: process.env.NODE_ENV !== 'production', // Automatically open the browser unless in production
-        hot: process.env.NODE_ENV !== 'production', // Enable hot module replacement unless in production
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
+        hot: true,
+        watchFiles: ['src/**/*'],
+        client: {
+            overlay: true,
+        },
     },
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     optimization: {
