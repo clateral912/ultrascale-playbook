@@ -1465,7 +1465,7 @@
         </script> -->
 
         <!-- <p><img alt="pp_comm_bandwidth.svg" src="/assets/images/pp_comm_bandwidth.svg" /></p> -->
-        <div class="figure-legend"><p>Inter-node communication bandwidth measurements across different node counts, showing median (lines) and 5th-95th percentile ranges (shaded areas) for AllReduce, AllGather, and ReduceScatter operations</p></div> <!-- RH: Should the figure and legend use all-reduce, all-gather, and reduce-scatter instead of AllReduce, AllGather, and ReduceScatter, to match the rest of the text? -->
+        <div class="figure-legend"><p>Inter-node communication bandwidth measurements across different node counts, showing median (lines) and 5th-95th percentile ranges (shaded areas) for all-reduce, all-gather, and reduce-scatter operations</p></div> <!-- RH: Should the figure and legend use all-reduce, all-gather, and reduce-scatter instead of AllReduce, AllGather, and ReduceScatter, to match the rest of the text? -->
 
         <p>Sequence and context parallelism can help for long sequences, but they don’t help much if the root cause of our memory issues is not the sequence length but rather the size of the model itself. For large models (70B+ parameters), the size of the weights alone can already push past the limits of the 4-8 GPUs on a single node. We can solve this issue by summoning another parallelism dimension: <em>pipeline parallelism</em> (PP).</p>
 
@@ -1754,7 +1754,7 @@
 
         <p>As you can see, ZeRO-3 and PP solve the same challenge but involve different approaches, and the choice between them will depend on whether you decide to focus communication on transferring weights or activations. While they can be combined, it's not often done in practice as doing so requires increasing the global batch size significantly to amortize the communication costs, creating a trade-off between global batch size, model size, network bandwidth, and training efficiency. If you decide to combine them, ZeRO-3 should be configured to keep the weights in memory during the series of PP micro-batches to minimize as much as possible unnecessary communication overhead.</p>
         
-        <p>On the other hand, ZeRO-1 and ZeRO-2, which focus on optimizer states and gradients, can be easily combined with pipeline parallelism and are complementary to it. These combinations don't raise any particular new challenges. For instance, the training of DeepSeek-v3 used PP combined with ZeRO-1 (sic) <!-- RH: Why "(sic)"? Safe to remove that? -->.</p>
+        <p>On the other hand, ZeRO-1 and ZeRO-2, which focus on optimizer states and gradients, can be easily combined with pipeline parallelism and are complementary to it. These combinations don't raise any particular new challenges. For instance, the training of DeepSeek-v3 used PP combined with ZeRO-1.</p>
 
         <p><strong>Tensor parallelism</strong> (with <strong>sequence parallelism</strong>) is naturally complementary to and can be combined with both pipeline parallelism and ZeRO-3, as it relies on the distributive property of matrix multiplications, which allows weights and activations to be sharded and computed independently before being combined.</p>
 
@@ -2092,11 +2092,11 @@
 
 
         <h3>A primer on GPUs</h3>
-        
-        <p>Generally, GPUs have a very hierarchical organization. In this primer, we’ll keep the discussion at the conceptual level that is necessary for the rest of our presentation.</p> <!-- RH: Should the second sentence here be an aside? If that works, also remove the paragraph break after "organization." Or, if you don't want to do that, swap the order of these two sentences? -->
+            
+        <p>Generally, GPUs have a very hierarchical organization. On the compute side, a GPU consists of an array of compute units called <strong><em>streaming multiprocessors (SMs)</em></strong>. Each SM contains and controls a set of streaming processors, also known as <em>cores</em>. For example, an NVIDIA H100 GPU has 132 SMs with 128 cores per SM, resulting in a total of 16,896 cores (see <a href="https://resources.nvidia.com/en-us-tensor-core">the docs for tensor cores</a> for details), each capable of handling multiple threads simultaneously.</p>
     
-        <p>On the compute side, a GPU consists of an array of compute units called <strong><em>streaming multiprocessors (SMs)</em></strong>. Each SM contains and controls a set of streaming processors, also known as <em>cores</em>. For example, an NVIDIA H100 GPU has 132 SMs with 128 cores per SM, resulting in a total of 16,896 cores (see <a href="https://resources.nvidia.com/en-us-tensor-core">the docs for tensor cores</a> for details), each capable of handling multiple threads simultaneously.</p>
-    
+        <aside> In this primer, we’ll keep the discussion at the conceptual level that is necessary for the rest of our presentation.</aside>
+
         <p><img alt="image.png" src="/assets/images/diving_primergpu.svg" /></p>
         <div class="figure-legend"><p>Source: https://blog.codingconfessions.com/p/gpu-computing</p></div>
     
