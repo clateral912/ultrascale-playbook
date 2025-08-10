@@ -2107,7 +2107,7 @@ d-appendix > distill-appendix {
     </div>
         <div class="order-button-container-second">
             <button class="order-button-second" onclick="window.open('https://www.lulu.com/shop/nouamane-tazi-and-ferdinand-mom-and-haojun-zhao-and-phuc-nguyen/the-ultra-scale-playbook/paperback/product-45yk9dj.html?page=1&pageSize=4', '_blank')">
-                Order Book
+                Book
             </button>
         </div>
 
