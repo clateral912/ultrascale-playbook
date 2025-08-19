@@ -18,6 +18,9 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 Instruction to install and run locally
 
 ```bash
+# fetch LFS-tracked files (large assets)
+git lfs pull
+
 npm install
 npm run build
 npm run dev
