@@ -688,5 +688,5 @@ select[name="presets"] {
 .order-button-container {
     display: flex;
     justify-content: center;
-    margin: 40px 0;
+    margin: 40px 0 20px 0;
 }

@@ -65,7 +65,10 @@
             </div>
             <p style="text-align: cekter; font-style: italic; margin-top: 10px; max-width: 900px; margin-left: auto; margin-right: auto;">We ran over 4,000 scaling experiments on up to 512 GPUs and measured throughput (size of markers) and GPU utilization (color of markers). Note that both are normalized per model size in this visualization.</p>
   
-            <p style="text-align: cekter; margin-top: 10px; max-width: 900px; margin-left: auto; margin-right: auto;">Order the printed book <a href="https://www.lulu.com/shop/nouamane-tazi-and-ferdinand-mom-and-haojun-zhao-and-phuc-nguyen/the-ultra-scale-playbook/paperback/product-45yk9dj.html?page=1&pageSize=4">here</a>.</p>
+            <div class="order-button-container">
+                <button class="order-button" style="margin: 0 8px;" onclick="window.open('https://www.lulu.com/shop/nouamane-tazi-and-ferdinand-mom-and-haojun-zhao-and-phuc-nguyen/the-ultra-scale-playbook/paperback/product-45yk9dj.html?page=1&pageSize=4', '_blank')">Order Book</button>
+                <button class="order-button" style="margin: 0 8px;" onclick="window.open('https://huggingface.co/nanotron', '_blank')">Get PDF</button>
+            </div>
         </div>
     </d-title>
     <d-byline></d-byline>
@@ -77,11 +80,7 @@
           Thousands of GPUs humming in perfect harmony. That's what it takes to train today's most powerful AI models – a symphony of computing power that until recently was the exclusive domain of elite research labs. Open source has transformed this landscape, but not completely. Yes, you can download the latest <a href="https://huggingface.co/meta-llama">Llama</a> or <a href="https://huggingface.co/deepseek-ai">DeepSeek</a> models. Yes, you can read their <a href="https://ai.meta.com/research/publications/the-llama-3-herd-of-models/">technical</a> and <a href="https://github.com/deepseek-ai/DeepSeek-R1/blob/main/DeepSeek_R1.pdf">experiment</a> reports. But the most challenging part – the training code, the knowledge and techniques necessary to coordinate GPUs to train these massive systems – remains shrouded in complexity and spread around in a series of disconnected papers and often private codebases.
           </p>
           <aside>Reading time: 2-4 days. <br>For the best reading experience, we recommend not using a mobile phone.</aside>
-        <div class="order-button-container">
-            <button class="order-button" onclick="window.open('https://www.lulu.com/shop/nouamane-tazi-and-ferdinand-mom-and-haojun-zhao-and-phuc-nguyen/the-ultra-scale-playbook/paperback/product-45yk9dj.html?page=1&pageSize=4', '_blank')">
-                Order Book Here
-            </button>
-        </div>
+        
         <p>
             This open source book is here to change that. Starting from the basics, we'll walk you through the knowledge necessary to scale the training of large language models (LLMs) from one GPU to tens, hundreds, and even thousands of GPUs, illustrating theory with practical code examples and reproducible benchmarks.
         </p>
