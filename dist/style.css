@@ -718,6 +718,12 @@ iframe, .js-plotly-plot {
     #graph-container {
         grid-template-columns: 1fr;
     }
+    #graph-all {
+        margin-right: 0px;
+    }
+    #controls {
+        margin-left: 0px;
+    }
 }
 
 .main-plot-container svg {
