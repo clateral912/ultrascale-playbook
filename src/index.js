@@ -48,16 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
     html.dark summary {color:black !important;}
     html.dark .katex-container {color:white !important;}
     html.dark d-code {background: white!important;}
+    html.dark .code-block div { background: white!important;}
+    html.dark .code-block div p { color: black!important;}
     /* Table borders in dark mode */
-    html.dark table{border-color:#262626}
-    html.dark th,html.dark td{border-color:#262626}
-    html.dark thead tr,html.dark tbody tr{border-color:#262626}
+    html.dark table{border-color:rgba(255,255,255,0.3)}
+    html.dark th,html.dark td{border-color:rgba(255,255,255,0.3)}
+    html.dark thead tr,html.dark tbody tr{border-color:rgba(255,255,255,0.3)}
     html.dark d-byline, html.dark d-article{border-top: 1px solid rgba(255, 255, 255, 0.5);}
     html.dark d-byline h3{color:white;}
     html.dark d-math *, html.dark span.katex{color:white !important;}
     html.dark d-appendix { color: white}
+    html.dark h2 { border-bottom: 1px solid rgba(43, 33, 33, 0.5);}
     html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 { color: white}
-    html.dark .l-body { background: white;}
     
     
     `;
