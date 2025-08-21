@@ -58,6 +58,9 @@
     </script>
     </d-front-matter>
     <d-title>
+        <!-- Theme toggle icons (declared once in DOM for clarity; visibility controlled via JS) -->
+        <img id="sunIcon" src="assets/images/sun.svg" alt="Sun icon" style="display:none;width:22px;height:22px;color:inherit"/>
+        <img id="moonIcon" src="assets/images/moon.svg" alt="Moon icon" style="display:none;width:22px;height:22px;color:inherit"/>
         <h1 class="l-page" style="text-align: center;">The Ultra-Scale Playbook:<br>Training LLMs on GPU Clusters</h1>
         <div id="title-plot" class="main-plot-container l-screen" style="overflow-x: hidden; width: 100%; text-align: center;">
             <div style="display: flex; justify-content: center; position: relative;">
@@ -65,12 +68,14 @@
             </div>
             <p style="text-align: cekter; font-style: italic; margin-top: 10px; max-width: 900px; margin-left: auto; margin-right: auto;">We ran over 4,000 scaling experiments on up to 512 GPUs and measured throughput (size of markers) and GPU utilization (color of markers). Note that both are normalized per model size in this visualization.</p>
   
-            <div class="order-button-container">
-                <button class="order-button" style="margin: 0 8px;" onclick="window.open('https://www.lulu.com/shop/nouamane-tazi-and-ferdinand-mom-and-haojun-zhao-and-phuc-nguyen/the-ultra-scale-playbook/paperback/product-45yk9dj.html?page=1&pageSize=4', '_blank')">Order Book</button>
-                <button class="order-button" style="margin: 0 8px;" onclick="window.open('https://huggingface.co/nanotron', '_blank')">Get PDF</button>
-            </div>
+
         </div>
+
     </d-title>
+    <div class="order-button-container">
+        <button class="order-button" style="margin: 0 8px;" onclick="window.open('https://www.lulu.com/shop/nouamane-tazi-and-ferdinand-mom-and-haojun-zhao-and-phuc-nguyen/the-ultra-scale-playbook/paperback/product-45yk9dj.html?page=1&pageSize=4', '_blank')">Order Book</button>
+        <button class="order-button" style="margin: 0 8px;" onclick="window.open('https://huggingface.co/nanotron', '_blank')">Get PDF</button>
+    </div>
     <d-byline></d-byline>
       <d-article>
         <d-contents>
@@ -101,7 +106,7 @@
         <aside>Note that we're still missing pipeline parallelism in this widget. To be added as an exercise for the reader.</aside>
 
         <div class="large-image-background-transparent">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; align-items: center;">
+            <div id="graph-container">
                 <div id="graph-all">
                     <div class="figure-legend">Memory usage breakdown</div>
                 <div id="graph"></div>
@@ -837,7 +842,7 @@
                 frame.style.width = frame.contentWindow.document.documentElement.scrollWidth + 'px';
             });
         </script> -->
-        <!-- <p><img alt="dp_ourjourney_memoryusage.svg" src="/assets/images/dp_ourjourney_memoryusage.svg" /></p> -->
+        <p><img alt="dp_ourjourney_memoryusage.svg" src="/assets/images/dp_ourjourney_memoryusage.svg" /></p>
 
 
         <p>We've also seen that data parallelism starts to have some limiting communication overhead above a certain level of scaling. Do we have other options for these larger models or large batch sizes? We do have some solutions, thankfully - they involve either moving some tensors to the CPU or splitting the weights/gradients/optimizer states tensors across GPU devices.</p>

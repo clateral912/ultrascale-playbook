@@ -5662,12 +5662,199 @@ function postMessageToHFSpaces(elementId) {
 }
 
 ;// ./src/index.js
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = src_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function src_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return src_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? src_arrayLikeToArray(r, a) : void 0; } }
+function src_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 // import { plotClusters } from './clusters'
 
 
 
+// Dark mode is now handled manually via a CSS class on <html> and injected styles
+
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded");
+
+  // Inject minimal styles for the theme toggle button
+  var styleEl = document.createElement('style');
+  styleEl.textContent = "\n    .theme-toggle-btn{position:absolute;top:16px;left:16px;z-index:10000;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:999px;background:rgba(255,255,255,0.9);backdrop-filter:saturate(150%) blur(6px);cursor:pointer;border:1px solid transparent;outline:none;box-shadow:none;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}\n    .theme-toggle-btn:hover{border-color:transparent;box-shadow:none}\n    .theme-toggle-btn:focus,.theme-toggle-btn:focus-visible{outline:none;border-color:transparent;box-shadow:none}\n    .theme-toggle-btn img{width:22px;height:22px;transition:filter .15s ease}\n    .theme-toggle-btn.dark img{filter: brightness(0) invert(1)}\n    @media (prefers-color-scheme: dark){.theme-toggle-btn{background:rgba(30,30,30,0.85);border-color:transparent;box-shadow:none}}\n    ";
+  document.head.appendChild(styleEl);
+
+  // Inject dark mode CSS (scoped via html.dark)
+  var darkCSS = "\n    html.dark{color-scheme:dark}\n    html.dark body{background:#242525;color:#e5e7eb}\n    html.dark a{color:#93c5fd}\n    html.dark .figure-legend{color:#9ca3af}\n    html.dark d-article,html.dark d-article *{color:white!important;}\n    html.dark d-contents{background:#242525}\n    html.dark d-contents nav a{color:#cbd5e1}\n    html.dark d-contents nav a:hover{text-decoration:underline solid rgba(255,255,255,0.6)}\n    html.dark .note-box{background:#111;border-left-color:#888}\n    html.dark .note-box-title{color:#d1d5db}\n    html.dark .note-box-content{color:#e5e7eb}\n    html.dark .large-image-background{background:#242525}\n    html.dark .boxed-image{background:#111;border-color:#262626;box-shadow:0 4px 6px rgba(0,0,0,.6)}\n    html.dark #graph-all,html.dark #controls,html.dark .memory-block,html.dark .activation-memory,html.dark .gradient-memory{background:#111;border-color:#262626;box-shadow:0 4px 6px rgba(0,0,0,.6);color:#e5e7eb}\n    html.dark label,html.dark .memory-title{color:#e5e7eb}\n    html.dark .memory-value{color:#93c5fd}\n    html.dark input,html.dark select,html.dark textarea{background:#0f0f0f;color:#e5e7eb;border:1px solid #333}\n    html.dark input:hover,html.dark select:hover,html.dark textarea:hover{border-color:#60a5fa}\n    html.dark input:focus,html.dark select:focus,html.dark textarea:focus{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,0.35)}\n    html.dark input[type=range]{background:#333}\n    html.dark input[type=range]::-webkit-slider-thumb{background:#3b82f6}\n    html.dark .plotly_caption{color:#9ca3af}\n    html.dark .theme-toggle-btn{background:rgba(30,30,30,0.85);border-color:transparent}\n    html.dark d-article img{background:white}\n    html.dark summary {color:black !important;}\n    html.dark .katex-container {color:white !important;}\n    html.dark d-code {background: white!important;}\n    /* Table borders in dark mode */\n    html.dark table{border-color:#262626}\n    html.dark th,html.dark td{border-color:#262626}\n    html.dark thead tr,html.dark tbody tr{border-color:#262626}\n    html.dark d-byline, html.dark d-article{border-top: 1px solid rgba(255, 255, 255, 0.5);}\n    html.dark d-byline h3{color:white;}\n    html.dark d-math *, html.dark span.katex{color:white !important;}\n    html.dark d-appendix { color: white}\n    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 { color: white}\n    html.dark .l-body { background: white;}\n    \n    \n    ";
+  var darkStyleEl = document.createElement('style');
+  darkStyleEl.id = 'darkmode-css';
+  darkStyleEl.textContent = darkCSS;
+  document.head.appendChild(darkStyleEl);
+
+  // Inject equivalent dark CSS into all ShadowRoots using :host-context(.dark)
+  // This ensures styles also apply inside web components with Shadow DOM
+  var shadowDarkCSS = darkCSS.replace(/html\.dark/g, ':host-context(.dark)');
+  var injectDarkStylesIntoRoot = function injectDarkStylesIntoRoot(root) {
+    // Only target ShadowRoots here
+    if (!root || !(root instanceof ShadowRoot)) return;
+    if (root.querySelector('style#darkmode-css-shadow')) return;
+    var style = document.createElement('style');
+    style.id = 'darkmode-css-shadow';
+    style.textContent = shadowDarkCSS;
+    root.appendChild(style);
+  };
+
+  // Normalize inline SVGs: ensure viewBox and preserveAspectRatio for responsiveness
+  var normalizeSvgElement = function normalizeSvgElement(svgEl) {
+    try {
+      if (!svgEl || svgEl.hasAttribute('viewBox')) return;
+      var widthAttr = svgEl.getAttribute('width');
+      var heightAttr = svgEl.getAttribute('height');
+      if (!widthAttr || !heightAttr) return;
+      var width = parseFloat(widthAttr);
+      var height = parseFloat(heightAttr);
+      if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) return;
+      svgEl.setAttribute('viewBox', "0 0 ".concat(width, " ").concat(height));
+      if (!svgEl.hasAttribute('preserveAspectRatio')) {
+        svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      }
+    } catch (_) {
+      // no-op
+    }
+  };
+  var processRootForSVGs = function processRootForSVGs(root) {
+    if (!root || typeof root.querySelectorAll !== 'function') return;
+    var svgs = root.querySelectorAll('svg:not([viewBox])');
+    svgs.forEach(function (svg) {
+      return normalizeSvgElement(svg);
+    });
+  };
+  var _scanNodeForShadowRoots = function scanNodeForShadowRoots(node) {
+    if (!node) return;
+    if (node.shadowRoot) {
+      injectDarkStylesIntoRoot(node.shadowRoot);
+      processRootForSVGs(node.shadowRoot);
+    }
+    // Traverse children
+    if (node.childNodes && node.childNodes.length) {
+      node.childNodes.forEach(function (child) {
+        // Process SVGs in this subtree as well
+        processRootForSVGs(child);
+        _scanNodeForShadowRoots(child);
+      });
+    }
+  };
+
+  // Intercept future shadow roots
+  var originalAttachShadow = Element.prototype.attachShadow;
+  Element.prototype.attachShadow = function (init) {
+    var shadow = originalAttachShadow.call(this, init);
+    try {
+      injectDarkStylesIntoRoot(shadow);
+      processRootForSVGs(shadow);
+    } catch (e) {}
+    return shadow;
+  };
+
+  // Initial sweep for any existing shadow roots
+  _scanNodeForShadowRoots(document.documentElement);
+  // Initial pass for regular DOM SVGs
+  processRootForSVGs(document);
+
+  // Observe DOM mutations to catch dynamically added components
+  var mo = new MutationObserver(function (mutations) {
+    var _iterator = _createForOfIteratorHelper(mutations),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var m = _step.value;
+        m.addedNodes && m.addedNodes.forEach(function (n) {
+          _scanNodeForShadowRoots(n);
+          processRootForSVGs(n);
+        });
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  });
+  mo.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+
+  // Create the toggle button
+  var btn = document.createElement('button');
+  btn.className = 'theme-toggle-btn';
+  btn.setAttribute('type', 'button');
+  btn.setAttribute('aria-label', 'Basculer le mode sombre');
+  // Reuse icons declared in HTML and move them into the button
+  var sunIcon = document.getElementById('sunIcon');
+  var moonIcon = document.getElementById('moonIcon');
+  if (sunIcon && moonIcon) {
+    // Make sure they adopt button sizing
+    sunIcon.style.display = 'none';
+    sunIcon.style.width = '22px';
+    sunIcon.style.height = '22px';
+    moonIcon.style.display = 'none';
+    moonIcon.style.width = '22px';
+    moonIcon.style.height = '22px';
+    btn.appendChild(sunIcon);
+    btn.appendChild(moonIcon);
+  }
+  document.body.appendChild(btn);
+  var setIcon = function setIcon(enabled) {
+    // enabled = dark mode enabled -> show sun (to indicate turning off), hide moon
+    sunIcon.style.display = enabled ? '' : 'none';
+    moonIcon.style.display = enabled ? 'none' : '';
+    btn.setAttribute('title', enabled ? 'Désactiver le mode sombre' : 'Activer le mode sombre');
+    btn.setAttribute('aria-pressed', String(enabled));
+    btn.classList.toggle('dark', enabled);
+  };
+  var setDark = function setDark(enabled) {
+    document.documentElement.classList.toggle('dark', enabled);
+    setIcon(enabled);
+  };
+  var THEME_KEY = 'theme';
+  var savedTheme = null;
+  try {
+    savedTheme = localStorage.getItem(THEME_KEY);
+  } catch (e) {}
+  var media = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+  var prefersDark = media ? media.matches : false;
+  // Initialisation: priorité à la préférence sauvegardée, sinon préférence système
+  if (savedTheme === 'dark') {
+    setDark(true);
+  } else if (savedTheme === 'light') {
+    setDark(false);
+  } else {
+    setDark(prefersDark);
+  }
+
+  // Si l'utilisateur a déjà choisi manuellement, on ne suit plus la préférence système
+  var manualOverride = savedTheme === 'dark' || savedTheme === 'light';
+
+  // React to system preference changes dynamically (no persistence)
+  if (media && typeof media.addEventListener === 'function') {
+    media.addEventListener('change', function (e) {
+      if (!manualOverride) {
+        setDark(e.matches);
+      }
+    });
+  } else if (media && typeof media.addListener === 'function') {
+    // Fallback for older browsers
+    media.addListener(function (e) {
+      if (!manualOverride) {
+        setDark(e.matches);
+      }
+    });
+  }
+
+  // Toggle handler — for réduire les glitches, attendre le next frame avant d'ajuster l'icône
+  btn.addEventListener('click', function () {
+    manualOverride = true;
+    var next = !document.documentElement.classList.contains('dark');
+    setDark(next);
+    try {
+      localStorage.setItem(THEME_KEY, next ? 'dark' : 'light');
+    } catch (e) {}
+  });
   loadFragments();
   init_memory_plot();
   syncHFSpacesURLHash();
