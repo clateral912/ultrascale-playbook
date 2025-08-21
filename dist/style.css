@@ -723,3 +723,8 @@ iframe, .js-plotly-plot {
 .main-plot-container svg {
     background: transparent !important;
 }
+
+.large-image-background-transparent {
+    margin-left: 0px;
+    margin-right: 0px;
+}
