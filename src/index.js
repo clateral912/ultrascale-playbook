@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     html.dark d-byline h3{color:white;}
     html.dark d-math *, html.dark span.katex{color:white !important;}
     html.dark d-appendix { color: white}
-    html.dark h2 { border-bottom: 1px solid rgba(43, 33, 33, 0.5);}
+    html.dark h2 { border-bottom: 1px solid rgba(255, 255, 255, 0.25);}
     html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 { color: white}
     html.dark .code-area { color: black;}
     html.dark .code-area a { color: black!important;}
