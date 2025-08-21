@@ -304,7 +304,6 @@ d-contents nav > ul > li > a:hover {
     border-radius: 6px;
     /* Add this to ensure the box only takes up needed space */
     display: inline-block;
-    width: 100%;
 }
 
 .note-box-title {
@@ -688,5 +687,39 @@ select[name="presets"] {
 .order-button-container {
     display: flex;
     justify-content: center;
-    margin: 40px 0 20px 0;
+    margin: 0px 0 40px 0;
+}
+
+d-article img {
+    width: 100%!important;
+}
+
+
+iframe, .js-plotly-plot {
+    width: 100%!important;
+    margin-bottom: 20px;
+}
+
+.modebar-container {
+    display: none;
+}
+
+#graph-container {
+    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+}
+
+@media (max-width: 768px) {
+    #graph-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    #graph-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.main-plot-container svg {
+    background: transparent !important;
 }
