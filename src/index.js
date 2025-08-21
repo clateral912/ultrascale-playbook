@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     html.dark body{background:#242525;color:#e5e7eb}
     html.dark a{color:#93c5fd}
     html.dark .figure-legend{color:#9ca3af}
-    html.dark d-article,html.dark d-article *{color:white!important;}
+    html.dark d-article, html.dark d-article p, html.dark d-article aside{color:white !important;}
     html.dark d-contents{background:#242525}
     html.dark d-contents nav a{color:#cbd5e1}
     html.dark d-contents nav a:hover{text-decoration:underline solid rgba(255,255,255,0.6)}
@@ -60,7 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
     html.dark d-appendix { color: white}
     html.dark h2 { border-bottom: 1px solid rgba(43, 33, 33, 0.5);}
     html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 { color: white}
-    
+    html.dark .code-area { color: black;}
+    html.dark .code-area a { color: black!important;}
     
     `;
     const darkStyleEl = document.createElement('style');
