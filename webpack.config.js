@@ -10,37 +10,38 @@ const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 
 const FRAGMENTS_PATH = "src/fragments";
 
-// Load the fragments from the fragments directory and caches it
+// Cache the in-flight promise (not the result), so concurrent callers all
+// await the same population pass instead of seeing an empty map mid-fill.
 const loadFragmentsMap = (() => {
-    let cachedFragments = null;
-    return async () => {
-        if (cachedFragments === null) {
-            cachedFragments = {};
-            const walkDir = async (dir, basePath = '') => {
-                const files = fs.readdirSync(dir);
-                await Promise.all(files.map(async file => {
-                    const filePath = path.join(dir, file);
-                    const relativePath = path.join(basePath, file);
-                    if (fs.statSync(filePath).isDirectory()) {
-                        await walkDir(filePath, relativePath);
-                    } else {
-                        // Remove the .html extension before creating the dotted path
-                        const nameWithoutExt = relativePath.replace(/\.html$/, '');
-                        const dottedPath = 'fragment-' + nameWithoutExt.replace(/\\/g, '-').replace(/\//g, '-').replace(/\./g, '-');
-                        const content = fs.readFileSync(filePath, "utf8");
-                        // Minify the HTML content using swcMinifyFragment
-                        const minifiedRes = await HtmlMinimizerPlugin.swcMinifyFragment({"tmp.html": content})
-                        if (minifiedRes.errors) {
-                            console.error(minifiedRes.errors)
+    let cachedPromise = null;
+    return () => {
+        if (cachedPromise === null) {
+            cachedPromise = (async () => {
+                const fragments = {};
+                const walkDir = async (dir, basePath = '') => {
+                    const files = fs.readdirSync(dir);
+                    await Promise.all(files.map(async file => {
+                        const filePath = path.join(dir, file);
+                        const relativePath = path.join(basePath, file);
+                        if (fs.statSync(filePath).isDirectory()) {
+                            await walkDir(filePath, relativePath);
+                        } else {
+                            const nameWithoutExt = relativePath.replace(/\.html$/, '');
+                            const dottedPath = 'fragment-' + nameWithoutExt.replace(/\\/g, '-').replace(/\//g, '-').replace(/\./g, '-');
+                            const content = fs.readFileSync(filePath, "utf8");
+                            const minifiedRes = await HtmlMinimizerPlugin.swcMinifyFragment({"tmp.html": content})
+                            if (minifiedRes.errors) {
+                                console.error(minifiedRes.errors)
+                            }
+                            fragments[dottedPath] = minifiedRes.code;
                         }
-                        const minifiedContent = minifiedRes.code;
-                        cachedFragments[dottedPath] = minifiedContent;
-                    }
-                }));
-            };
-            await walkDir(FRAGMENTS_PATH);
+                    }));
+                };
+                await walkDir(FRAGMENTS_PATH);
+                return fragments;
+            })();
         }
-        return cachedFragments;
+        return cachedPromise;
     };
 })();
 
