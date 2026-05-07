@@ -89,10 +89,15 @@ module.exports = {
                 { from: "src/fragments/*", to: "fragments/[name].html" },
                 { from: "src/style.css", to: "style.css" },
                 { from: "src/bibliography.bib", to: "bibliography.bib" },
-                { 
-                    from: "src/index.html", 
+                {
+                    from: "src/index.html",
                     to: "index.html",
-                    transform: transformHandlebars, 
+                    transform: transformHandlebars,
+                },
+                {
+                    from: "src/index_zh.html",
+                    to: "index_zh.html",
+                    transform: transformHandlebars,
                 },
             ],
         }),
